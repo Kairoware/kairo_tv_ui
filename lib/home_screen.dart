@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:installed_apps/installed_apps.dart';
 import 'package:installed_apps/app_info.dart';
 import 'wallpaper_slideshow.dart';
@@ -24,17 +25,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Carrega alguns apps para exibir na barra inferior.
   // No futuro, você pode implementar uma lógica para salvar os favoritos.
-  Future<void> _loadFavoriteApps() async {
-    List<AppInfo> apps = await InstalledApps.getInstalledApps(
-      withIcon: true,
-      excludeSystemApps: false,
-    );
-
-    // Pega os 8 primeiros apps como "favoritos" para este exemplo
-    setState(() {
-      _favoriteApps = apps.take(8).toList();
-      _isLoading = false;
-    });
+  Future<void> _loadFavoriteApps() async {    
+    try {
+      List<AppInfo> apps = await InstalledApps.getInstalledApps(
+          withIcon: true,
+          excludeSystemApps: false,
+        );
+      // Pega os 8 primeiros apps como "favoritos" para este exemplo
+      if (mounted) {
+        setState(() {
+          _favoriteApps = apps.take(8).toList();
+        });
+      }
+    } on PlatformException catch (e) {
+      print("Erro ao carregar os aplicativos: $e");
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
   }
 
   @override
@@ -44,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           // 1. Widget do Slideshow como fundo
           const WallpaperSlideshow(),
-          // 2. Barra de aplicativos inferior
+          // 2. Barra de aplicativos inferior (agora com o nome corrigido)
           CustomBottomAppBar(
             favoriteApps: _favoriteApps,
             isLoading: _isLoading,

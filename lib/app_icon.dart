@@ -1,9 +1,9 @@
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:installed_apps/app_info.dart';
 
 // Widget para os ícones dos apps, agora com estado para o foco
 class AppIcon extends StatefulWidget {
-  final Application? app;
+  final AppInfo? app;
   final VoidCallback onTap;
   final Widget? customIcon; // Para o ícone da gaveta
   final bool autoFocus;
@@ -83,10 +83,10 @@ class _AppIconState extends State<AppIcon> {
           borderRadius: BorderRadius.circular(borderRadius * 0.66),
           child: widget.customIcon != null
               ? Center(child: widget.customIcon) // Garante que o ícone customizado seja centralizado
-              : (widget.app is ApplicationWithIcon // Se for um app com ícone...
+              : (widget.app?.icon != null // Se for um app com ícone...
                   ? Center(
                       child: Image.memory(
-                        (widget.app as ApplicationWithIcon).icon,
+                        widget.app!.icon!,
                         width: widget.size * 0.5, // O ícone ocupará 50% do card
                         height: widget.size * 0.5,
                         fit: BoxFit.contain,

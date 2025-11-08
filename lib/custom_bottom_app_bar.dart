@@ -4,11 +4,11 @@ import 'package:installed_apps/app_info.dart';
 import 'app_drawer_screen.dart';
 import 'app_icon.dart';
 
-class BottomAppBar extends StatelessWidget {
+class CustomBottomAppBar extends StatelessWidget {
   final List<AppInfo> favoriteApps;
   final bool isLoading;
 
-  const BottomAppBar({
+  const CustomBottomAppBar({
     super.key,
     required this.favoriteApps,
     required this.isLoading,

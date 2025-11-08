@@ -1,5 +1,6 @@
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:installed_apps/installed_apps.dart';
+import 'package:installed_apps/app_info.dart';
 import 'app_icon.dart';
 
 // Nova tela para a gaveta de apps
@@ -11,16 +12,15 @@ class AppDrawerScreen extends StatefulWidget {
 }
 
 class _AppDrawerScreenState extends State<AppDrawerScreen> {
-  late Future<List<Application>> _appsFuture;
+  late Future<List<AppInfo>> _appsFuture;
 
   @override
   void initState() {
     super.initState();
     // Carrega todos os apps que podem ser abertos
-    _appsFuture = DeviceApps.getInstalledApplications(
-      includeAppIcons: true,
-      includeSystemApps: true,
-      onlyAppsWithLaunchIntent: true,
+    _appsFuture = InstalledApps.getInstalledApps(
+      withIcon: true,
+      excludeSystemApps: false,
     );
   }
 
@@ -42,7 +42,7 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFADADB2).withOpacity(0.95),
-      body: FutureBuilder<List<Application>>(
+      body: FutureBuilder<List<AppInfo>>(
         future: _appsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,7 +66,7 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
               final app = apps[index];
               return AppIcon(
                 app: app,
-                onTap: () => DeviceApps.openApp(app.packageName),
+                onTap: () => InstalledApps.startApp(app.packageName),
                 size: iconSize,
                 borderWidth: borderWidth,
               );

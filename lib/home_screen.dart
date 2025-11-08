@@ -1,7 +1,8 @@
-import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
+import 'package:installed_apps/installed_apps.dart';
+import 'package:installed_apps/app_info.dart';
 import 'wallpaper_slideshow.dart';
-import 'bottom_app_bar.dart';
+import 'custom_bottom_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   // Lista de apps para a barra inferior (favoritos/recentes)
-  List<Application> _favoriteApps = [];
+  List<AppInfo> _favoriteApps = [];
   bool _isLoading = true;
 
   @override
@@ -24,10 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   // Carrega alguns apps para exibir na barra inferior.
   // No futuro, você pode implementar uma lógica para salvar os favoritos.
   Future<void> _loadFavoriteApps() async {
-    List<Application> apps = await DeviceApps.getInstalledApplications(
-      includeAppIcons: true,
-      includeSystemApps: true,
-      onlyAppsWithLaunchIntent: true,
+    List<AppInfo> apps = await InstalledApps.getInstalledApps(
+      withIcon: true,
+      excludeSystemApps: false,
     );
 
     // Pega os 8 primeiros apps como "favoritos" para este exemplo
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // 1. Widget do Slideshow como fundo
           const WallpaperSlideshow(),
           // 2. Barra de aplicativos inferior
-          BottomAppBar(
+          CustomBottomAppBar(
             favoriteApps: _favoriteApps,
             isLoading: _isLoading,
           ),

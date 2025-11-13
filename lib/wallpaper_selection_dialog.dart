@@ -17,8 +17,8 @@ class _WallpaperSelectionDialogState extends State<WallpaperSelectionDialog> {
     final availableWallpapers = WallpaperProvider.availableWallpapers;
 
     return AlertDialog(
-      title: const Text('Escolha um Papel de Parede'),
-      backgroundColor: const Color(0xFF0A1045).withOpacity(0.95),
+      title: const Text('Escolha um Papel de Parede', style: TextStyle(color: Colors.black)),
+      backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.all(16.0),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.7, // Ocupa 70% da largura da tela
@@ -55,7 +55,12 @@ class _WallpaperSelectionDialogState extends State<WallpaperSelectionDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Fechar')),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text(
+            'Fechar',
+            style: TextStyle(color: Colors.black87),
+          )),
       ],
     );
   }
@@ -116,9 +121,8 @@ class _WallpaperThumbnailState extends State<_WallpaperThumbnail> {
             widget.wallpaper.build(context),
             // Adiciona uma borda se estiver selecionado ou focado
             if (widget.isSelected || _isFocused)
-              Container(
-                decoration: BoxDecoration(border: Border.all(color: _isFocused ? themeProvider.selectedColor : Colors.white, width: 4.0), borderRadius: BorderRadius.circular(8.0)),
-              ),
+              // A borda do item selecionado agora é cinza para contrastar com o fundo branco
+              Container(decoration: BoxDecoration(border: Border.all(color: _isFocused ? themeProvider.selectedColor : Colors.grey.shade700, width: 4.0), borderRadius: BorderRadius.circular(8.0))),
           ],
         ),
       ),

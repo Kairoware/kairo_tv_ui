@@ -18,9 +18,7 @@ plugins {
 android {
     namespace = "com.kairoware.tv.laucher"
     compileSdk = flutter.compileSdkVersion
-
     ndkVersion = "27.0.12077973"
-
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -28,7 +26,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = "11"
     }
 
     defaultConfig {
@@ -65,6 +63,11 @@ android {
             // O Flutter assina automaticamente para depuração.
             signingConfig = signingConfigs.getByName("release")
         }
+    }
+
+    packagingOptions {
+        // Solução mais robusta para o erro "failed to strip debug symbols".
+        doNotStrip("**/*.so")
     }
 }
 

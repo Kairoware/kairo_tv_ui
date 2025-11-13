@@ -64,11 +64,6 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
-
-    packagingOptions {
-        // Solução mais robusta para o erro "failed to strip debug symbols".
-        doNotStrip("**/*.so")
-    }
 }
 
 

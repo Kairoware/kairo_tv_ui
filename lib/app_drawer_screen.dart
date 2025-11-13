@@ -69,6 +69,7 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
                 onTap: () => InstalledApps.startApp(app.packageName),
                 size: iconSize,
                 borderWidth: borderWidth,
+                showAppName: true, // Ativa a exibição do nome
               );
             },
           );

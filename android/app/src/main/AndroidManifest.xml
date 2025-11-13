@@ -1,10 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Declara que o app é para Android TV, mas não é obrigatório (permite instalar em outros dispositivos) -->
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+
     <!-- Permissão necessária para listar os aplicativos instalados no dispositivo -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <application
         android:label="Kairo TV Launcher"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/launcher_icon"
+        > <!-- android:banner="@mipmap/launcher_banner" Adiciona o banner para TV -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,6 +25,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <!-- Categoria para ser o launcher principal em dispositivos Android TV -->
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
                 <!-- Adiciona as categorias para ser um launcher -->
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
